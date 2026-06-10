@@ -101,6 +101,32 @@ FLAGS = {
     "Uzbekistan":     "🇺🇿",
 }
 
+# ISO codes for flag images (emoji flags don't render on Windows browsers)
+COUNTRY_ISO = {
+    "Argentina": "ar", "Brazil": "br", "Bulgaria": "bg", "Chile": "cl",
+    "Colombia": "co", "Costa Rica": "cr", "Czech Republic": "cz", "Egypt": "eg",
+    "Estonia": "ee", "Georgia": "ge", "Germany": "de", "Hong Kong": "hk",
+    "Hungary": "hu", "Indonesia": "id", "Japan": "jp", "Malaysia": "my",
+    "Mexico": "mx", "Morocco": "ma", "Panama": "pa", "Peru": "pe",
+    "Philippines": "ph", "Poland": "pl", "Portugal": "pt", "Serbia": "rs",
+    "Singapore": "sg", "South Africa": "za", "South Korea": "kr", "Spain": "es",
+    "Taiwan": "tw", "Thailand": "th", "Turkey": "tr", "UAE": "ae",
+    "Vietnam": "vn", "Croatia": "hr", "Ecuador": "ec", "Finland": "fi",
+    "Greece": "gr", "Jordan": "jo", "Lithuania": "lt", "Nigeria": "ng",
+    "Paraguay": "py", "Romania": "ro", "Slovenia": "si", "Sri Lanka": "lk",
+    "Tunisia": "tn", "Uzbekistan": "uz",
+}
+
+def flag_img(country: str, h: int = 15) -> str:
+    """Flag as an image (renders everywhere, unlike emoji flags on Windows)."""
+    iso = COUNTRY_ISO.get(country)
+    if not iso:
+        return "🌐"
+    w = round(h * 4 / 3)
+    return (f'<img src="https://flagcdn.com/w80/{iso}.png" alt="{country}" '
+            f'style="width:{w}px;height:{h}px;object-fit:cover;'
+            f'border-radius:3px;vertical-align:-2px;">')
+
 REGION_ORDER = [
     "All Regions",
     "Southeast Asia",
@@ -236,6 +262,8 @@ WIKI_TITLES = {
     "Varna":                   "Varna, Bulgaria",
     "Faro":                    "Faro, Portugal",
     "Panama City":             "Panama City",
+    "Ko Lanta":                "Ko Lanta District",
+    "Marrakech":               "Marrakesh",
 }
 
 # ─── Data ─────────────────────────────────────────────────────────────────────
@@ -258,16 +286,21 @@ def fetch_city_images(cities: tuple) -> dict:
             try:
                 r = requests.get(url, headers=headers, timeout=5)
                 if r.ok:
-                    thumb = (r.json().get("thumbnail") or {}).get("source", "")
+                    j = r.json()
+                    thumb = (j.get("thumbnail") or {}).get("source", "")
                     if thumb:
-                        return city, thumb.replace("/320px-", "/640px-")
+                        # only upscale if the original is big enough (else 404)
+                        orig_w = (j.get("originalimage") or {}).get("width", 0)
+                        if orig_w >= 640:
+                            thumb = thumb.replace("/320px-", "/640px-")
+                        return city, thumb
                     break  # page exists but has no image — don't retry
             except Exception:
                 continue
         return city, ""
 
     try:
-        with ThreadPoolExecutor(max_workers=12) as ex:
+        with ThreadPoolExecutor(max_workers=8) as ex:
             return dict(ex.map(fetch, cities))
     except Exception:
         return {c: "" for c in cities}
@@ -396,8 +429,9 @@ html, body,
 .tile-fallback-flag {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    font-size: 72px; opacity: 0.5;
+    font-size: 72px; opacity: 0.45;
 }
+.tile-fallback-flag img { border-radius: 6px; }
 .tile-rank {
     position: absolute; top: 12px; left: 14px;
     font-size: 12px; font-weight: 800; color: #fff;
@@ -550,7 +584,7 @@ def pills_for(row, weights) -> str:
     return " ".join(pill_html(SHORT.get(f, f), row[f]) for f in top5_factors(row, weights))
 
 def card_html(rank: int, row, weights) -> str:
-    flag  = FLAGS.get(row["Country"], "🌐")
+    flag  = flag_img(row["Country"], h=14)
     score = row["Weighted Score"]
     sc    = score_cls(score)
     return f"""
@@ -588,7 +622,7 @@ def detail_grid_html(row) -> str:
     return f'<div class="factor-grid">{grid_rows}</div>'
 
 def tile_html(rank: int, row, weights, img_url: str) -> str:
-    flag  = FLAGS.get(row["Country"], "🌐")
+    flag  = flag_img(row["Country"], h=15)
     score = row["Weighted Score"]
     sc    = score_cls(score)
     if img_url:
@@ -596,7 +630,7 @@ def tile_html(rank: int, row, weights, img_url: str) -> str:
         fallback = ""
     else:
         bg       = "background:linear-gradient(135deg,#1a1a1a 0%,#26160a 100%);"
-        fallback = f'<div class="tile-fallback-flag">{flag}</div>'
+        fallback = f'<div class="tile-fallback-flag">{flag_img(row["Country"], h=54)}</div>'
     return f"""
 <div class="tile" style="{bg}">
   {fallback}
