@@ -101,6 +101,26 @@ FLAGS = {
     "Uzbekistan":     "🇺🇿",
 }
 
+# ─── Weight presets (personas) ────────────────────────────────────────────────
+# Order matches FACTORS: Cost, F:M, English, Ease, Safety, Weather, Apps,
+# Cultural, Internet, Expat, Healthcare, Flights, Air, Political, Nightlife
+
+PRESETS = {
+    "💍 Marriage Minded":  [5, 10, 8, 7, 7, 5, 7, 9, 3, 3, 5, 5, 4, 6, 2],
+    "💻 Digital Nomad":    [8, 4, 6, 8, 6, 6, 5, 5, 10, 8, 5, 7, 5, 6, 5],
+    "🎉 Nightlife & Apps": [5, 7, 6, 6, 4, 6, 10, 7, 4, 6, 3, 7, 3, 4, 10],
+    "🏡 Settle Down":      [6, 5, 6, 6, 9, 7, 3, 6, 6, 5, 9, 6, 8, 9, 3],
+    "🪙 Shoestring Budget":[10, 6, 4, 8, 5, 6, 6, 6, 5, 4, 4, 4, 4, 4, 5],
+}
+
+PRESET_HINTS = {
+    "💍 Marriage Minded":  "Serious relationship focus — ratio, openness, English",
+    "💻 Digital Nomad":    "Work-first — internet, cost, expat scene",
+    "🎉 Nightlife & Apps": "Social-first — apps, nightlife, going out",
+    "🏡 Settle Down":      "Long-term comfort — safety, healthcare, stability",
+    "🪙 Shoestring Budget":"Stretch every dollar — cost above all",
+}
+
 # ISO codes for flag images (emoji flags don't render on Windows browsers)
 COUNTRY_ISO = {
     "Argentina": "ar", "Brazil": "br", "Bulgaria": "bg", "Chile": "cl",
@@ -756,7 +776,7 @@ def tile_html(rank: int, row, weights, img_url: str) -> str:
 
 df = load_data()
 
-# ─── Reset flags (must run BEFORE sliders are created) ───────────────────────
+# ─── Reset / preset flags (must run BEFORE sliders are created) ──────────────
 
 if st.session_state.pop("_reset_to_5", False):
     for factor in FACTORS:
@@ -766,9 +786,26 @@ if st.session_state.pop("_reset_to_0", False):
     for factor in FACTORS:
         st.session_state[f"w_{factor}"] = 0
 
+_preset = st.session_state.pop("_apply_preset", None)
+if _preset in PRESETS:
+    for factor, value in zip(FACTORS, PRESETS[_preset]):
+        st.session_state[f"w_{factor}"] = value
+
 # ─── Sidebar: weight sliders ──────────────────────────────────────────────────
 
 with st.sidebar:
+    st.markdown(
+        "<p style='font-size:10px;color:#555;text-transform:uppercase;"
+        "letter-spacing:.08em;margin-bottom:12px;'>🎭 Quick Presets</p>",
+        unsafe_allow_html=True,
+    )
+    for preset_name in PRESETS:
+        if st.button(preset_name, width="stretch",
+                     help=PRESET_HINTS[preset_name], key=f"preset_{preset_name}"):
+            st.session_state["_apply_preset"] = preset_name
+            st.rerun()
+
+    st.markdown("<hr style='border-color:#1e1e1e;margin:16px 0;'>", unsafe_allow_html=True)
     st.markdown(
         "<p style='font-size:10px;color:#555;text-transform:uppercase;"
         "letter-spacing:.08em;margin-bottom:12px;'>⚖ Factor Weights (0–10)</p>",
