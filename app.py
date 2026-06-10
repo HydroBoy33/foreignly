@@ -557,6 +557,8 @@ html, body,
                 text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
 .tile-country { font-size: 11px; color: #ccc; margin-top: 1px;
                 text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+.tile-cost    { font-size: 13px; font-weight: 800; margin-top: 5px;
+                text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
 .tile-pills {
     display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px;
     opacity: 0; max-height: 0; overflow: hidden;
@@ -753,6 +755,13 @@ def tile_html(rank: int, row, weights, img_url: str) -> str:
     flag  = flag_img(row["Country"], h=15)
     score = row["Weighted Score"]
     sc    = score_cls(score)
+    # cost of living always visible (raw $/mo when available)
+    cost_sc = score_cls(row["Cost of Living"])
+    if "Raw_USD" in row.index:
+        cost_txt = f"💰 ${int(row['Raw_USD']):,}/mo"
+    else:
+        cost_txt = f"💰 Cost {row['Cost of Living']:.0f}"
+    cost_line = f'<div class="tile-cost sc-{cost_sc}">{cost_txt}</div>'
     if img_url:
         bg       = f"background-image:url('{img_url}');"
         fallback = ""
@@ -768,6 +777,7 @@ def tile_html(rank: int, row, weights, img_url: str) -> str:
   <div class="tile-bottom">
     <div class="tile-city">{flag} {row['City']}</div>
     <div class="tile-country">{row['Country']} · {row['Region']}</div>
+    {cost_line}
     <div class="tile-pills">{pills_for(row, weights)}</div>
   </div>
 </div>"""
