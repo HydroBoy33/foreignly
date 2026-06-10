@@ -266,6 +266,94 @@ WIKI_TITLES = {
     "Marrakech":               "Marrakesh",
 }
 
+# Curated single iconic image per city (Wikimedia Commons, landmark articles)
+CITY_IMAGES = {
+    "Alicante": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Playa_del_Postiguet_2.jpg/960px-Playa_del_Postiguet_2.jpg",  # Santa Bárbara Castle
+    "Amman": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Amman_Citadel.jpg/960px-Amman_Citadel.jpg",  # Amman Citadel
+    "Asuncion": "https://upload.wikimedia.org/wikipedia/commons/3/35/Palacio_de_los_L%C3%B3pez.jpg",  # Palacio de los López
+    "Athens": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/1029_Acropolis_of_Athens_in_Greece_at_night_Photo_by_Giles_Laurent.jpg/960px-1029_Acropolis_of_Athens_in_Greece_at_night_Photo_by_Giles_Laurent.jpg",  # Acropolis of Athens
+    "Bali (Canggu/Ubud)": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/TanahLot_2014.JPG/960px-TanahLot_2014.JPG",  # Tanah Lot
+    "Bangkok": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AD%E0%B8%A3%E0%B8%B8%E0%B8%932.jpg/960px-%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AD%E0%B8%A3%E0%B8%B8%E0%B8%932.jpg",  # Wat Arun
+    "Barcelona": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/SF_maig_2_cropped.jpg/960px-SF_maig_2_cropped.jpg",  # Sagrada Família
+    "Belgrade": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Hram_svetog_save_beograd_0005_%28edited%29.jpg/960px-Hram_svetog_save_beograd_0005_%28edited%29.jpg",  # Church of Saint Sava
+    "Berlin": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Brandenburger_Tor_abends.jpg/960px-Brandenburger_Tor_abends.jpg",  # Brandenburg Gate
+    "Bogotá": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/2017_Bogot%C3%A1_Bas%C3%ADlica_del_Se%C3%B1or_Ca%C3%ADdo_de_Monserrate.jpg/960px-2017_Bogot%C3%A1_Bas%C3%ADlica_del_Se%C3%B1or_Ca%C3%ADdo_de_Monserrate.jpg",  # Monserrate
+    "Budapest": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Hungarian_Parliament_Building_from_across_the_Danube%2C_2025-01-11.jpg/960px-Hungarian_Parliament_Building_from_across_the_Danube%2C_2025-01-11.jpg",  # Hungarian Parliament Building
+    "Buenos Aires": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Buenos_Aires_%2820234294752%29.jpg/960px-Buenos_Aires_%2820234294752%29.jpg",  # Obelisco de Buenos Aires
+    "Busan": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Gwangan_Bridge1.jpg/960px-Gwangan_Bridge1.jpg",  # Gwangan Bridge
+    "Cairo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Pyramids_of_the_Giza_Necropolis.jpg/960px-Pyramids_of_the_Giza_Necropolis.jpg",  # Giza pyramid complex
+    "Cape Town": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Table_Mountain_DanieVDM.jpg/960px-Table_Mountain_DanieVDM.jpg",  # Table Mountain
+    "Chiang Mai": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Wat_Phra_That_Doi_Suthep_-_Chiang_Mai.jpg/960px-Wat_Phra_That_Doi_Suthep_-_Chiang_Mai.jpg",  # Wat Phra That Doi Suthep
+    "Cordoba": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Catedral_de_C%C3%B3rdoba_%282010_01%29_-_panoramio.jpg/960px-Catedral_de_C%C3%B3rdoba_%282010_01%29_-_panoramio.jpg",  # Córdoba Cathedral
+    "Cuenca": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Catedral_de_la_Inmaculada_Concepci%C3%B3n%2C_Cuenca.jpg/960px-Catedral_de_la_Inmaculada_Concepci%C3%B3n%2C_Cuenca.jpg",  # New Cathedral of Cuenca
+    "Curitiba": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Curitiba_Botanic_Garden.jpg/960px-Curitiba_Botanic_Garden.jpg",  # Botanical Garden of Curitiba
+    "Cusco": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sacsayhuam%C3%A1n%2C_Cusco%2C_Per%C3%BA%2C_2015-07-31%2C_DD_27.JPG/960px-Sacsayhuam%C3%A1n%2C_Cusco%2C_Per%C3%BA%2C_2015-07-31%2C_DD_27.JPG",  # Sacsayhuamán
+    "Da Nang": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/C%E1%BA%A7u_R%E1%BB%93ng.jpg/960px-C%E1%BA%A7u_R%E1%BB%93ng.jpg",  # Dragon Bridge (Da Nang)
+    "Dubai": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Burj_Khalifa_%28worlds_tallest_building%29_and_the_Dubai_skyline_%2825781049892%29.jpg/960px-Burj_Khalifa_%28worlds_tallest_building%29_and_the_Dubai_skyline_%2825781049892%29.jpg",  # Burj Khalifa
+    "Dubrovnik": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dubrovnik_s_24.jpg/960px-Dubrovnik_s_24.jpg",  # Walls of Dubrovnik
+    "Faro": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/FaroKesklinn.jpg/960px-FaroKesklinn.jpg",  # Faro Cathedral
+    "Florianópolis": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Ponte_Hercilio_Luz_-_Florianopolis_-_Santa_Catarina.jpg/960px-Ponte_Hercilio_Luz_-_Florianopolis_-_Santa_Catarina.jpg",  # Hercílio Luz Bridge
+    "Fukuoka": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Fukuoka_Tower_Before_Sunset.jpg/960px-Fukuoka_Tower_Before_Sunset.jpg",  # Fukuoka Tower
+    "Funchal (Madeira)": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Catedral%2C_Funchal%2C_Madeira%2C_Portugal%2C_2019-05-29%2C_DD_34.jpg/960px-Catedral%2C_Funchal%2C_Madeira%2C_Portugal%2C_2019-05-29%2C_DD_34.jpg",  # Funchal Cathedral
+    "Hanoi": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Th%C3%A1p_R%C3%B9a_5.jpg/960px-Th%C3%A1p_R%C3%B9a_5.jpg",  # Turtle Tower
+    "Helsinki": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Kirkko3.png/960px-Kirkko3.png",  # Helsinki Cathedral
+    "Ho Chi Minh City": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Bas%C3%ADlica_de_Nuestra_Se%C3%B1ora%2C_Ciudad_Ho_Chi_Minh%2C_Vietnam%2C_2013-08-14%2C_DD_03.JPG/960px-Bas%C3%ADlica_de_Nuestra_Se%C3%B1ora%2C_Ciudad_Ho_Chi_Minh%2C_Vietnam%2C_2013-08-14%2C_DD_03.JPG",  # Notre-Dame Cathedral Basilica of Saigon
+    "Hong Kong": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Hong_Kong_Skyline_viewed_from_Victoria_Peak.jpg/960px-Hong_Kong_Skyline_viewed_from_Victoria_Peak.jpg",  # Victoria Harbour
+    "Istanbul": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hagia_Sophia_%28228968325%29.jpeg/960px-Hagia_Sophia_%28228968325%29.jpeg",  # Hagia Sophia
+    "Ko Lanta": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Ko_Lanta_Beach.jpg/960px-Ko_Lanta_Beach.jpg",  # Ko Lanta Yai
+    "Ko Pha Ngan": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Koh_Phangan01.jpg",  # Haad Rin
+    "Kobe": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/20190901_Kobe_Port_Tower-1.jpg/960px-20190901_Kobe_Port_Tower-1.jpg",  # Kobe Port Tower
+    "Kota Kinabalu": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/KotaKinabalu_Sabah_CityMosque-08.jpg/960px-KotaKinabalu_Sabah_CityMosque-08.jpg",  # Kota Kinabalu City Mosque
+    "Krabi": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Railay_Beach_5.jpg/960px-Railay_Beach_5.jpg",  # Railay Beach
+    "Kraków": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Wawel_%284%29.jpg/960px-Wawel_%284%29.jpg",  # Wawel Castle
+    "Kuala Lumpur": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Kuala_Lumpur_Tower_20250822_%281%29.jpg/960px-Kuala_Lumpur_Tower_20250822_%281%29.jpg",  # Menara Kuala Lumpur
+    "Kyoto": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg/960px-Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg",  # Kinkaku-ji
+    "Lagos": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Lekki-link-bridge--full-view2.jpg/960px-Lekki-link-bridge--full-view2.jpg",  # Lekki-Ikoyi Link Bridge
+    "Las Palmas (Canary Is.)": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Playa_de_las_canteras_24_Dec2006_palmas_gran_canaria.jpg/960px-Playa_de_las_canteras_24_Dec2006_palmas_gran_canaria.jpg",  # Playa de Las Canteras
+    "Lima": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Lima%2C_Peru%E2%80%A6the_Plaza_de_Armas_de_Lima_by_day_%288444360764%29.jpg/960px-Lima%2C_Peru%E2%80%A6the_Plaza_de_Armas_de_Lima_by_day_%288444360764%29.jpg",  # Plaza Mayor, Lima
+    "Lisbon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Torre_Bel%C3%A9m_April_2009-4a.jpg/960px-Torre_Bel%C3%A9m_April_2009-4a.jpg",  # Belém Tower
+    "Ljubljana": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Ljubljanski_grad_in_Grajski_gri%C4%8D.jpg/960px-Ljubljanski_grad_in_Grajski_gri%C4%8D.jpg",  # Ljubljana Castle
+    "Madrid": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Palacio_Real_de_Madrid_Julio_2016_%28cropped%29.jpg/960px-Palacio_Real_de_Madrid_Julio_2016_%28cropped%29.jpg",  # Royal Palace of Madrid
+    "Manila": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Baluartillo_de_San_Jos%C3%A9%2C_Manila%2C_Filipinas%2C_2023-08-26%2C_DD_41.jpg/960px-Baluartillo_de_San_Jos%C3%A9%2C_Manila%2C_Filipinas%2C_2023-08-26%2C_DD_41.jpg",  # Intramuros
+    "Marrakech": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Marokko0112_%28retouched%29.jpg/960px-Marokko0112_%28retouched%29.jpg",  # Koutoubia Mosque
+    "Medellín": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Edificio_Coltejer-Medellin.jpg/960px-Edificio_Coltejer-Medellin.jpg",  # Coltejer Building
+    "Mexico City": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Bellas_Artes_01.jpg/960px-Bellas_Artes_01.jpg",  # Palacio de Bellas Artes
+    "Munich": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rathaus_and_Marienplatz_from_Peterskirche_-_August_2006.jpg/960px-Rathaus_and_Marienplatz_from_Peterskirche_-_August_2006.jpg",  # Marienplatz
+    "Naha (Okinawa)": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Naha_Okinawa_Japan_Shuri-Castle-01.jpg/960px-Naha_Okinawa_Japan_Shuri-Castle-01.jpg",  # Shuri Castle
+    "Nakhon Ratchasima": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Phimai_%28III%29.jpg/960px-Phimai_%28III%29.jpg",  # Phimai Historical Park
+    "Novi Sad": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Petrovaradin_Fortress_%28P%C3%A9terv%C3%A1radi_v%C3%A1r%2C_Peterwardein%29.JPG/960px-Petrovaradin_Fortress_%28P%C3%A9terv%C3%A1radi_v%C3%A1r%2C_Peterwardein%29.JPG",  # Petrovaradin Fortress
+    "Oaxaca": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Monte_Alban_West_Side_Platform.jpg/960px-Monte_Alban_West_Side_Platform.jpg",  # Monte Albán
+    "Osaka": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Osaka_Castle_03bs3200.jpg/960px-Osaka_Castle_03bs3200.jpg",  # Osaka Castle
+    "Panama City": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Cinta_Costera_Panam%C3%A1.jpg/960px-Cinta_Costera_Panam%C3%A1.jpg",  # Cinta Costera skyline
+    "Penang": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Kek_Lok_Si_at_dusk.jpg/960px-Kek_Lok_Si_at_dusk.jpg",  # Kek Lok Si
+    "Phuket": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Dramatic_karst_landscape_of_Phang_Nga_Bay%2C_Thailand.jpg/960px-Dramatic_karst_landscape_of_Phang_Nga_Bay%2C_Thailand.jpg",  # Phang Nga Bay
+    "Playa del Carmen": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/PlayadelCarmen3.png/960px-PlayadelCarmen3.png",  # Playa del Carmen
+    "Portimão": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Praia_da_Rocha_2014-09-11.jpg/960px-Praia_da_Rocha_2014-09-11.jpg",  # Praia da Rocha
+    "Porto": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Dom_Lu%C3%ADs_I_Bridge_%2836961760686%29.jpg/960px-Dom_Lu%C3%ADs_I_Bridge_%2836961760686%29.jpg",  # Dom Luís I Bridge
+    "Prague": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Prague_07-2016_view_from_Lesser_Town_Tower_of_Charles_Bridge_img3.jpg/960px-Prague_07-2016_view_from_Lesser_Town_Tower_of_Charles_Bridge_img3.jpg",  # Charles Bridge
+    "Recife": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Recife_bom_jesus.jpg",  # Recife Antigo
+    "Rio de Janeiro": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Christ_the_Redeemer_-_Cristo_Redentor.jpg/960px-Christ_the_Redeemer_-_Cristo_Redentor.jpg",  # Christ the Redeemer (statue)
+    "San José": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Costa_Rica-Teatro_Nacional.JPG/960px-Costa_Rica-Teatro_Nacional.JPG",  # National Theatre of Costa Rica
+    "Santiago": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Costanera_Center_at_evening_%28cropped%29.jpg/960px-Costanera_Center_at_evening_%28cropped%29.jpg",  # Gran Torre Santiago
+    "Seoul": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/%EA%B4%91%ED%99%94%EB%AC%B8_%EC%9B%94%EB%8C%80.jpg/960px-%EA%B4%91%ED%99%94%EB%AC%B8_%EC%9B%94%EB%8C%80.jpg",  # Gyeongbokgung
+    "Singapore": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Marina_Bay_Sands_%28I%29.jpg/960px-Marina_Bay_Sands_%28I%29.jpg",  # Marina Bay Sands
+    "Sofia": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Catedral_de_Alejandro_Nevski_--_2019_--_Sof%C3%ADa%2C_Bulgaria.jpg/960px-Catedral_de_Alejandro_Nevski_--_2019_--_Sof%C3%ADa%2C_Bulgaria.jpg",  # Alexander Nevsky Cathedral, Sofia
+    "Split": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Croatia-01239_-_The_Peristil_%289551533404%29.jpg/960px-Croatia-01239_-_The_Peristil_%289551533404%29.jpg",  # Diocletian's Palace
+    "Taipei": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Taipei_101_from_Xiangshan_20250905.jpg/960px-Taipei_101_from_Xiangshan_20250905.jpg",  # Taipei 101
+    "Tallinn": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Catedral_de_Alejandro_Nevsky%2C_Tallin%2C_Estonia%2C_2012-08-11%2C_DD_46.JPG/960px-Catedral_de_Alejandro_Nevsky%2C_Tallin%2C_Estonia%2C_2012-08-11%2C_DD_46.JPG",  # Alexander Nevsky Cathedral, Tallinn
+    "Tashkent": "https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Toshkent_teleminorasi.jpg/960px-Toshkent_teleminorasi.jpg",  # Tashkent TV Tower
+    "Tbilisi": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Tbilisi_IMG_8846_1920.jpg/960px-Tbilisi_IMG_8846_1920.jpg",  # Narikala
+    "Timisoara": "https://upload.wikimedia.org/wikipedia/en/thumb/4/4e/Catedrala_Mitropolitana%2C_Timisoara.jpg/960px-Catedrala_Mitropolitana%2C_Timisoara.jpg",  # Timișoara Orthodox Cathedral
+    "Tokyo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Tokyo_Tower_2023.jpg/960px-Tokyo_Tower_2023.jpg",  # Tokyo Tower
+    "Tunis": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Minaret_et_patio_de_la_mosqu%C3%A9e_Zitouna_au_centre_de_la_M%C3%A9dina_de_Tunis.jpg/960px-Minaret_et_patio_de_la_mosqu%C3%A9e_Zitouna_au_centre_de_la_M%C3%A9dina_de_Tunis.jpg",  # Al-Zaytuna Mosque
+    "Valencia": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/2002_wurde_das_Ozeaneum_in_Valencia_er%C3%B6ffnet._14.jpg/960px-2002_wurde_das_Ozeaneum_in_Valencia_er%C3%B6ffnet._14.jpg",  # L'Oceanogràfic
+    "Varna": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Varna_Cathedral_-_2.jpg/960px-Varna_Cathedral_-_2.jpg",  # Dormition Cathedral, Varna
+    "Vilnius": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Vilnius_Cathedral_20.jpg/960px-Vilnius_Cathedral_20.jpg",  # Vilnius Cathedral
+    "Warsaw": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Pa%C5%82ac_Kultury_i_Nauki_2019.jpg/960px-Pa%C5%82ac_Kultury_i_Nauki_2019.jpg",  # Palace of Culture and Science
+    "Weligama": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Weligama_Beach_in_Sri_Lanka.jpg/960px-Weligama_Beach_in_Sri_Lanka.jpg",  # Weligama Beach
+    "Wrocław": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Old_Town_Hall_in_Wroc%C5%82aw%2C_September_2022_07.jpg/960px-Old_Town_Hall_in_Wroc%C5%82aw%2C_September_2022_07.jpg",  # Wrocław Town Hall
+}
+
 # ─── Data ─────────────────────────────────────────────────────────────────────
 
 @st.cache_data(ttl=0)
@@ -758,7 +846,10 @@ if view.empty:
 
 # ─── Fetch city photos (needed by grid + list + map detail) ───────────────────
 
-images = fetch_city_images(tuple(df["City"]))
+images = {c: CITY_IMAGES.get(c, "") for c in df["City"]}
+_missing = tuple(c for c in df["City"] if not images[c])
+if _missing:  # fallback to Wikipedia API for any city not in the curated dict
+    images.update(fetch_city_images(_missing))
 
 # ═══ GRID VIEW (Nomad List-style photo tiles) ═════════════════════════════════
 
