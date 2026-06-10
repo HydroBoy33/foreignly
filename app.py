@@ -547,6 +547,26 @@ html, body,
 /* === Map detail panel === */
 .map-hint { font-size: 12px; color: #555; margin: 8px 0; }
 
+/* === Compare view === */
+.cmp-grid  { display: grid; gap: 12px 16px; align-items: center; margin-top: 12px; }
+.cmp-head  { align-self: end; }
+.cmp-photo { width: 100%; height: 120px; object-fit: cover;
+             border-radius: 12px; margin-bottom: 8px; display: block;
+             border: 1px solid #1e1e1e; }
+.cmp-city  { font-size: 16px; font-weight: 800; color: #f0f0f0; }
+.cmp-sub   { font-size: 11px; color: #555; margin-top: 2px; }
+.cmp-score { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.cmp-flbl  { font-size: 10px; color: #555; text-transform: uppercase;
+             letter-spacing: 0.06em; text-align: right; }
+.cmp-cell  { display: flex; flex-direction: column; gap: 4px; }
+.cmp-best  { color: #f97316; font-size: 11px; }
+
+/* Multiselect tags match the accent color */
+[data-testid="stMultiSelect"] [data-baseweb="tag"] {
+    background: #26160a !important; color: #f97316 !important;
+}
+[data-testid="stMultiSelect"] [data-baseweb="tag"] span { color: #f97316 !important; }
+
 /* === Expander card styling === */
 [data-testid="stExpander"] {
     background: #131313 !important;
@@ -810,7 +830,7 @@ with c3:
     )
 
 view_mode = st.radio(
-    "view", ["🖼 Grid", "📋 List", "🗺 Map"],
+    "view", ["🖼 Grid", "📋 List", "🗺 Map", "⚖ Compare"],
     horizontal=True, label_visibility="collapsed", key="view_mode",
 )
 
@@ -885,7 +905,7 @@ elif view_mode == "📋 List":
 
 # ═══ MAP VIEW (interactive world map) ═════════════════════════════════════════
 
-else:
+elif view_mode == "🗺 Map":
     plot = view[view["City"].isin(CITY_COORDS)].copy()
     plot["lat"] = plot["City"].map(lambda c: CITY_COORDS[c][0])
     plot["lon"] = plot["City"].map(lambda c: CITY_COORDS[c][1])
@@ -946,5 +966,80 @@ else:
         st.markdown(
             '<div class="map-hint">🖱 Click a city marker to see its full factor '
             "breakdown · marker size &amp; color = weighted score</div>",
+            unsafe_allow_html=True,
+        )
+
+# ═══ COMPARE VIEW (2–3 cities side by side) ═══════════════════════════════════
+
+else:
+    ranked = df.sort_values("Weighted Score", ascending=False)
+    all_cities = ranked["City"].tolist()
+    sel = st.multiselect(
+        "compare", all_cities, default=all_cities[:2], max_selections=3,
+        label_visibility="collapsed", placeholder="Pick 2–3 cities to compare...",
+    )
+
+    if len(sel) < 2:
+        st.markdown(
+            "<p style='color:#555;padding:30px 0;'>Pick at least 2 cities above "
+            "to compare them side by side.</p>",
+            unsafe_allow_html=True,
+        )
+    else:
+        rows = [df[df["City"] == c].iloc[0] for c in sel]
+        n = len(rows)
+
+        def raw_extra(row, f):
+            if f == "Cost of Living" and "Raw_USD" in row.index:
+                return f"${int(row['Raw_USD']):,}/mo"
+            if f == "Internet Speed" and "Raw_Mbps" in row.index:
+                return f"{int(row['Raw_Mbps'])} Mbps"
+            if f == "Air Quality" and "Raw_AQI" in row.index:
+                return f"AQI {int(row['Raw_AQI'])}"
+            return ""
+
+        cells = ['<div></div>']
+        # ── header row: photo, name, weighted score ──
+        for r in rows:
+            img   = images.get(r["City"], "")
+            photo = f'<img class="cmp-photo" src="{img}" alt="{r["City"]}">' if img else ""
+            sc    = score_cls(r["Weighted Score"])
+            rank  = all_cities.index(r["City"]) + 1
+            cells.append(
+                f'<div class="cmp-head">{photo}'
+                f'<div class="cmp-city">{flag_img(r["Country"], h=14)} {r["City"]}</div>'
+                f'<div class="cmp-sub">#{rank} overall · {r["Country"]} · {r["Region"]}</div>'
+                f'<div class="cmp-score sc-{sc}">{r["Weighted Score"]:.1f}</div></div>'
+            )
+        # ── one row per factor, best value starred ──
+        for f in FACTORS:
+            vals = [r[f] for r in rows]
+            best = max(vals)
+            cells.append(f'<div class="cmp-flbl">{FACTOR_EMOJI[f]} {f}</div>')
+            for r in rows:
+                fs   = r[f]
+                fc   = bar_color(fs)
+                sc2  = score_cls(fs)
+                star = ' <span class="cmp-best">★</span>' if fs == best else ""
+                raw  = raw_extra(r, f)
+                raw_html = (f" <span style='font-size:10px;color:#666;"
+                            f"font-weight:400;'>· {raw}</span>") if raw else ""
+                cells.append(
+                    f'<div class="cmp-cell">'
+                    f'<div class="bar-bg"><div class="bar-fill" '
+                    f'style="width:{fs:.1f}%;background:{fc};"></div></div>'
+                    f'<div class="factor-val sc-{sc2}">{fs:.1f}{star}{raw_html}</div>'
+                    f'</div>'
+                )
+
+        st.markdown(
+            f'<div class="cmp-grid" style="grid-template-columns:150px '
+            f'repeat({n},1fr);">' + "".join(cells) + "</div>",
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            "<p style='font-size:11px;color:#444;margin-top:14px;'>★ = best of "
+            "the selected cities for that factor · bars use the same 0–100 "
+            "scores as the rankings</p>",
             unsafe_allow_html=True,
         )
