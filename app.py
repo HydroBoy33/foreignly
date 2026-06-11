@@ -147,6 +147,64 @@ def flag_img(country: str, h: int = 15) -> str:
             f'style="width:{w}px;height:{h}px;object-fit:cover;'
             f'border-radius:3px;vertical-align:-2px;">')
 
+# ─── Visa & stay info: US passport, tourist entry (checked June 2026) ────────
+# {country: (max initial stay in days, short label)}
+
+VISA_INFO = {
+    "Thailand":       (30,  "Visa-free 30d (ext +30)"),
+    "Indonesia":      (30,  "VOA 30d (ext +30)"),
+    "Vietnam":        (90,  "e-Visa 90d"),
+    "Malaysia":       (90,  "Visa-free 90d"),
+    "Singapore":      (90,  "Visa-free 90d"),
+    "Philippines":    (30,  "Visa-free 30d (extendable)"),
+    "Japan":          (90,  "Visa-free 90d"),
+    "South Korea":    (90,  "Visa-free 90d (K-ETA from 2027)"),
+    "Taiwan":         (90,  "Visa-free 90d"),
+    "Hong Kong":      (90,  "Visa-free 90d"),
+    "Mexico":         (180, "Visa-free up to 180d"),
+    "Colombia":       (90,  "Visa-free 90d (ext to 180/yr)"),
+    "Argentina":      (90,  "Visa-free 90d"),
+    "Chile":          (90,  "Visa-free 90d"),
+    "Peru":           (90,  "Visa-free 90d"),
+    "Costa Rica":     (180, "Visa-free 180d"),
+    "Panama":         (180, "Visa-free 180d"),
+    "Brazil":         (90,  "e-Visa 90d"),
+    "Ecuador":        (90,  "Visa-free 90d"),
+    "Paraguay":       (90,  "Visa-free 90d"),
+    "Portugal":       (90,  "Schengen 90/180"),
+    "Spain":          (90,  "Schengen 90/180"),
+    "Germany":        (90,  "Schengen 90/180"),
+    "Czech Republic": (90,  "Schengen 90/180"),
+    "Hungary":        (90,  "Schengen 90/180"),
+    "Poland":         (90,  "Schengen 90/180"),
+    "Estonia":        (90,  "Schengen 90/180"),
+    "Greece":         (90,  "Schengen 90/180"),
+    "Croatia":        (90,  "Schengen 90/180"),
+    "Slovenia":       (90,  "Schengen 90/180"),
+    "Lithuania":      (90,  "Schengen 90/180"),
+    "Finland":        (90,  "Schengen 90/180"),
+    "Bulgaria":       (90,  "Schengen 90/180"),
+    "Romania":        (90,  "Schengen 90/180"),
+    "Serbia":         (90,  "Visa-free 90d"),
+    "Georgia":        (365, "Visa-free 1 year"),
+    "Uzbekistan":     (30,  "e-Visa 30d"),
+    "Turkey":         (90,  "Visa-free 90/180"),
+    "UAE":            (30,  "VOA 30d (ext)"),
+    "Morocco":        (90,  "Visa-free 90d"),
+    "Egypt":          (30,  "VOA 30d"),
+    "South Africa":   (90,  "Visa-free 90d"),
+    "Tunisia":        (90,  "Visa-free 90d"),
+    "Jordan":         (30,  "VOA 30d"),
+    "Nigeria":        (30,  "e-Visa 30d"),
+    "Sri Lanka":      (30,  "ETA 30d (ext)"),
+}
+
+def visa_days(country: str) -> int:
+    return VISA_INFO.get(country, (0, ""))[0]
+
+def visa_label(country: str) -> str:
+    return VISA_INFO.get(country, (0, "—"))[1]
+
 REGION_ORDER = [
     "All Regions",
     "Southeast Asia",
@@ -433,8 +491,51 @@ html, body,
     border-right: 1px solid #1e1e1e !important;
 }
 
-/* Hide Streamlit chrome */
-#MainMenu, footer, header { visibility: hidden; }
+/* Hide Streamlit chrome — but keep the sidebar toggle reachable */
+#MainMenu, footer { visibility: hidden; }
+header { visibility: hidden; height: 0 !important; }
+
+/* Reopen-sidebar button: always visible and obvious (critical on mobile,
+   where the sidebar starts collapsed). Covers old + new Streamlit testids. */
+header [data-testid="stExpandSidebarButton"],
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"] {
+    visibility: visible !important;
+    display: flex !important;
+    align-items: center !important;
+    position: fixed !important;
+    top: 10px !important;
+    left: 0 !important;
+    z-index: 9999 !important;
+    background: #f97316 !important;
+    border-radius: 0 999px 999px 0 !important;
+    padding: 8px 14px 8px 10px !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.55);
+}
+header [data-testid="stExpandSidebarButton"] svg,
+[data-testid="stSidebarCollapsedControl"] svg,
+[data-testid="collapsedControl"] svg {
+    color: #fff !important;
+    fill: #fff !important;
+}
+header [data-testid="stExpandSidebarButton"]::after,
+[data-testid="stSidebarCollapsedControl"]::after,
+[data-testid="collapsedControl"]::after {
+    content: "⚖ Weights & Presets";
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    margin-left: 6px;
+    white-space: nowrap;
+}
+
+/* Give the page a little top room so the floating button never covers content */
+@media (max-width: 768px) {
+    .main .block-container,
+    [data-testid="stMain"] .block-container {
+        padding-top: 56px !important;
+    }
+}
 
 /* === Typography === */
 * { font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -559,6 +660,7 @@ html, body,
                 text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
 .tile-cost    { font-size: 13px; font-weight: 800; margin-top: 5px;
                 text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
+.tile-visa    { font-size: 11px; font-weight: 700; color: #ccc; }
 .tile-pills {
     display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px;
     opacity: 0; max-height: 0; overflow: hidden;
@@ -619,6 +721,21 @@ html, body,
     border-radius: 8px !important;
 }
 [data-testid="stTextInput"] input::placeholder { color: #555 !important; }
+
+[data-testid="stNumberInput"] input {
+    background: #1a1a1a !important;
+    border: 1px solid #2a2a2a !important;
+    color: #e8e8e8 !important;
+    border-radius: 8px !important;
+}
+[data-testid="stNumberInput"] input::placeholder { color: #555 !important; }
+[data-testid="stNumberInput"] button {
+    background: #1a1a1a !important; color: #888 !important;
+    border: 1px solid #2a2a2a !important;
+}
+[data-testid="stToggle"] p, [data-testid="stMain"] [data-testid="stCheckbox"] p {
+    color: #999 !important; font-size: 13px !important;
+}
 
 [data-baseweb="select"] {
     background: #1a1a1a !important;
@@ -706,14 +823,20 @@ def pill_html(label: str, score: float) -> str:
 
 # ─── HTML builders (shared by list / grid / map views) ───────────────────────
 
+PILL_EXCLUDE = {"Cultural Openness"}  # factors never shown as hover pills
+
 def top5_factors(row, weights) -> list:
-    contrib = {f: row[f] * weights[f] for f in FACTORS if weights[f] > 0}
+    contrib = {
+        f: row[f] * weights[f]
+        for f in FACTORS
+        if weights[f] > 0 and f not in PILL_EXCLUDE
+    }
     return sorted(contrib, key=contrib.get, reverse=True)[:5]
 
 def pills_for(row, weights) -> str:
     return " ".join(pill_html(SHORT.get(f, f), row[f]) for f in top5_factors(row, weights))
 
-def card_html(rank: int, row, weights) -> str:
+def card_html(rank: int, row, weights, badge: str = "") -> str:
     flag  = flag_img(row["Country"], h=14)
     score = row["Weighted Score"]
     sc    = score_cls(score)
@@ -722,7 +845,7 @@ def card_html(rank: int, row, weights) -> str:
   <div class="rank-num">#{rank}</div>
   <div class="city-main">
     <div class="city-name">{flag} {row['City']}</div>
-    <div class="city-sub">{row['Country']} · {row['Region']}</div>
+    <div class="city-sub">{row['Country']} · {row['Region']} · 🛂 {visa_label(row['Country'])}{badge}</div>
   </div>
   <div class="score-badge sc-{sc}">{score:.1f}</div>
   <div class="pills-row">{pills_for(row, weights)}</div>
@@ -751,7 +874,7 @@ def detail_grid_html(row) -> str:
 </div>"""
     return f'<div class="factor-grid">{grid_rows}</div>'
 
-def tile_html(rank: int, row, weights, img_url: str) -> str:
+def tile_html(rank: int, row, weights, img_url: str, badge: str = "") -> str:
     flag  = flag_img(row["Country"], h=15)
     score = row["Weighted Score"]
     sc    = score_cls(score)
@@ -761,7 +884,9 @@ def tile_html(rank: int, row, weights, img_url: str) -> str:
         cost_txt = f"💰 ${int(row['Raw_USD']):,}/mo"
     else:
         cost_txt = f"💰 Cost {row['Cost of Living']:.0f}"
-    cost_line = f'<div class="tile-cost sc-{cost_sc}">{cost_txt}</div>'
+    vd = visa_days(row["Country"])
+    visa_span = (f' <span class="tile-visa">· 🛂 {vd}d</span>' if vd else "")
+    cost_line = f'<div class="tile-cost sc-{cost_sc}">{cost_txt}{badge}{visa_span}</div>'
     if img_url:
         bg       = f"background-image:url('{img_url}');"
         fallback = ""
@@ -860,7 +985,7 @@ st.markdown(
 
 # ─── Filter bar + view toggle ─────────────────────────────────────────────────
 
-c1, c2, c3 = st.columns([3, 2, 2])
+c1, c2, c3, c4 = st.columns([3, 2, 2, 2])
 with c1:
     search = st.text_input(
         "search", placeholder="🔍  Search city or country...",
@@ -875,6 +1000,39 @@ with c3:
         "sort", ["Weighted Score"] + FACTORS,
         label_visibility="collapsed",
     )
+with c4:
+    min_stay = st.selectbox(
+        "stay",
+        ["🛂 Any stay length", "30+ days", "60+ days", "90+ days",
+         "180+ days", "365+ days"],
+        label_visibility="collapsed",
+        help="Minimum easy tourist stay on a US passport (visa-free / VOA / e-Visa)",
+    )
+
+# ─── Budget mode ──────────────────────────────────────────────────────────────
+
+b1, b2, _bsp = st.columns([2, 3, 4])
+with b1:
+    budget = st.number_input(
+        "budget", min_value=0, max_value=20000, value=None, step=100,
+        label_visibility="collapsed", placeholder="💵 Monthly budget (USD)",
+        help="Enter your monthly budget — cities get ✅ comfortable (≤90% of "
+             "budget), ⚠️ tight (within ±10%), or ❌ over budget",
+    )
+with b2:
+    hide_over = st.toggle("Hide over-budget cities", value=False,
+                          disabled=not budget)
+
+def budget_badge(row) -> str:
+    """✅ / ⚠️ / ❌ vs the user's monthly budget (empty when budget mode off)."""
+    if not budget or "Raw_USD" not in row.index:
+        return ""
+    ratio = row["Raw_USD"] / budget
+    if ratio <= 0.9:
+        return " ✅"
+    if ratio <= 1.1:
+        return " ⚠️"
+    return " ❌"
 
 view_mode = st.radio(
     "view", ["🖼 Grid", "📋 List", "🗺 Map", "⚖ Compare"],
@@ -894,6 +1052,13 @@ if search.strip():
 
 if region != "All Regions":
     view = view[view["Region"] == region]
+
+if min_stay != "🛂 Any stay length":
+    _min_days = int(min_stay.split("+")[0])
+    view = view[view["Country"].map(visa_days) >= _min_days]
+
+if budget and hide_over and "Raw_USD" in view.columns:
+    view = view[view["Raw_USD"] <= budget * 1.1]
 
 view = view.sort_values(sort_by, ascending=False).reset_index(drop=True)
 
@@ -922,14 +1087,17 @@ if _missing:  # fallback to Wikipedia API for any city not in the curated dict
 
 if view_mode == "🖼 Grid":
     tiles = "".join(
-        tile_html(i + 1, view.iloc[i], weights, images.get(view.iloc[i]["City"], ""))
+        tile_html(i + 1, view.iloc[i], weights,
+                  images.get(view.iloc[i]["City"], ""),
+                  badge=budget_badge(view.iloc[i]))
         for i in range(len(view))
     )
     st.markdown(f'<div class="tile-grid">{tiles}</div>', unsafe_allow_html=True)
     st.markdown(
         "<p style='font-size:11px;color:#444;margin-top:14px;'>Hover a city to "
-        "see its top factors · switch to 📋 List for the full breakdown · photos "
-        "via Wikipedia</p>",
+        "see its top factors · switch to 📋 List for the full breakdown · "
+        "🛂 = max easy tourist stay on a US passport (visa-free/VOA/e-Visa, "
+        "June 2026 — verify before booking) · photos via Wikipedia</p>",
         unsafe_allow_html=True,
     )
 
@@ -946,7 +1114,8 @@ elif view_mode == "📋 List":
         label = f"#{rank}  {row['City']}  ·  {row['Country']}  —  {score:.1f}"
         with st.expander(label, expanded=False):
             st.markdown(
-                banner + card_html(rank, row, weights) + detail_grid_html(row),
+                banner + card_html(rank, row, weights, badge=budget_badge(row))
+                + detail_grid_html(row),
                 unsafe_allow_html=True,
             )
 
@@ -1006,7 +1175,8 @@ elif view_mode == "🗺 Map":
         img  = images.get(selected_city, "")
         banner = f'<img class="photo-banner" src="{img}" alt="{selected_city}">' if img else ""
         st.markdown(
-            banner + card_html(rank, row, weights) + detail_grid_html(row),
+            banner + card_html(rank, row, weights, badge=budget_badge(row))
+            + detail_grid_html(row),
             unsafe_allow_html=True,
         )
     else:
@@ -1057,6 +1227,13 @@ else:
                 f'<div class="cmp-city">{flag_img(r["Country"], h=14)} {r["City"]}</div>'
                 f'<div class="cmp-sub">#{rank} overall · {r["Country"]} · {r["Region"]}</div>'
                 f'<div class="cmp-score sc-{sc}">{r["Weighted Score"]:.1f}</div></div>'
+            )
+        # ── visa row ──
+        cells.append('<div class="cmp-flbl">🛂 Visa (US)</div>')
+        for r in rows:
+            cells.append(
+                f'<div class="cmp-cell"><div class="factor-val" '
+                f'style="color:#ccc;">{visa_label(r["Country"])}</div></div>'
             )
         # ── one row per factor, best value starred ──
         for f in FACTORS:
